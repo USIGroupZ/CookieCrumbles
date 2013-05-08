@@ -42,6 +42,15 @@ public class CookieCrumblesMain extends JFrame {
         jButton1 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        doubleJSlider1 = new ch.usi.inf.sa2.CookieCrumbles.doubleJSlider();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        doubleJSlider2 = new ch.usi.inf.sa2.CookieCrumbles.doubleJSlider();
+        jLabel6 = new javax.swing.JLabel();
+        jSlider1 = new javax.swing.JSlider();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -105,6 +114,50 @@ public class CookieCrumblesMain extends JFrame {
             }
         });
         getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 450, -1, -1));
+
+        doubleJSlider1.setDoubleMaximum(359.0);
+        doubleJSlider1.setDoubleValue(0.0);
+        doubleJSlider1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                doubleJSlider1MouseDragged(evt);
+            }
+        });
+        getContentPane().add(doubleJSlider1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 490, -1, -1));
+
+        jLabel3.setText("0.0");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 500, 40, -1));
+
+        jLabel4.setText("Direction");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 500, -1, -1));
+
+        jLabel5.setText("Spread");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 500, -1, -1));
+
+        doubleJSlider2.setDoubleValue(0.0);
+        doubleJSlider2.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                doubleJSlider2MouseDragged(evt);
+            }
+        });
+        getContentPane().add(doubleJSlider2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 490, -1, -1));
+
+        jLabel6.setText("0.0");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 500, -1, 20));
+
+        jSlider1.setSnapToTicks(true);
+        jSlider1.setValue(1);
+        jSlider1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jSlider1MouseDragged(evt);
+            }
+        });
+        getContentPane().add(jSlider1, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 490, 130, -1));
+
+        jLabel7.setText("Density");
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 500, -1, -1));
+
+        jLabel8.setText("1");
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 500, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -215,16 +268,75 @@ public class CookieCrumblesMain extends JFrame {
     }//GEN-LAST:event_viewportMouseClicked
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        viewport.clearEverything();
         viewport.Simulation1();
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
+        viewport.clearEverything();
         viewport.Simulation2();
     }//GEN-LAST:event_jButton5MouseClicked
 
     private void jButton6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseClicked
         viewport.clearEverything();
     }//GEN-LAST:event_jButton6MouseClicked
+
+    private void doubleJSlider1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_doubleJSlider1MouseDragged
+        doubleJSlider1.setDoubleMinimum(0d);
+        doubleJSlider1.setDoubleMaximum(360d);
+        double value = doubleJSlider1.getValue()/100;
+        jLabel3.setText(""+value);
+        double valueRad = Math.toRadians(value);
+        ArrayList emitterList = viewport.getEmitterList();
+        ArrayList emitterListBF = viewport.getEmitterListBH();
+        if (!emitterList.isEmpty()){
+           ParticleEmitter emitter = (ParticleEmitter) emitterList.get(0);
+           emitter.setDirection(valueRad);
+        }
+//        if (!emitterListBF.isEmpty()){
+//            ParticleEmitterBH emitter = (ParticleEmitterBH) emitterListBF.get(0);
+//            emitter.setDirection(valueRad);
+//        }
+        
+    }//GEN-LAST:event_doubleJSlider1MouseDragged
+
+    private void doubleJSlider2MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_doubleJSlider2MouseDragged
+        doubleJSlider2.setDoubleMinimum(0d);
+        doubleJSlider2.setDoubleMaximum(360d);
+        double value = doubleJSlider2.getValue()/100;
+        jLabel6.setText(""+value);
+        double valueRad = Math.toRadians(value);
+        ArrayList emitterList = viewport.getEmitterList();
+        ArrayList emitterListBF = viewport.getEmitterListBH();
+         if (!emitterList.isEmpty()){
+           ParticleEmitter emitter = (ParticleEmitter) emitterList.get(0);
+           emitter.setSpread(valueRad);
+        }
+//        if (!emitterListBF.isEmpty()){
+//             ParticleEmitterBH emitter = (ParticleEmitterBH) emitterListBF.get(0);
+//           emitter.setSpread(valueRad);
+//        }
+    }//GEN-LAST:event_doubleJSlider2MouseDragged
+
+    private void jSlider1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSlider1MouseDragged
+        jSlider1.setMinimum(1);
+        jSlider1.setMaximum(5);
+        int value = jSlider1.getValue();
+        jLabel8.setText(""+value);
+        ArrayList emitterList = viewport.getEmitterList();
+        ArrayList emitterListBF = viewport.getEmitterListBH();
+         if (!emitterList.isEmpty()){
+           ParticleEmitter emitter = (ParticleEmitter) emitterList.get(0);
+           emitter.setDensity(value);
+        }
+//        if (!emitterListBF.isEmpty()){
+//            ParticleEmitterBH emitter = (ParticleEmitterBH) emitterListBF.get(0);
+//           emitter.setDensity(value);
+//        }
+                                        
+        
+        
+    }//GEN-LAST:event_jSlider1MouseDragged
 
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -252,11 +364,20 @@ public class CookieCrumblesMain extends JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private ch.usi.inf.sa2.CookieCrumbles.doubleJSlider doubleJSlider1;
+    private ch.usi.inf.sa2.CookieCrumbles.doubleJSlider doubleJSlider2;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JSlider jSlider1;
     private javax.swing.JTextField translation;
     private ch.usi.inf.sa2.CookieCrumbles.Viewport viewport;
     private javax.swing.JTextField zoom;

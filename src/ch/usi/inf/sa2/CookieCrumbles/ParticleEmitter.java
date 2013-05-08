@@ -27,6 +27,11 @@ public class ParticleEmitter {
     CCWall wall2;
     CCWall wall3;
     CCWall wall4;
+    CCWall wall5;
+    CCWall wall6;
+    double direction;
+    double spread;
+    int density;
     
  
     /**
@@ -45,6 +50,11 @@ public class ParticleEmitter {
         wall = new CCWall(-500, -400, 300 ,  3.14);
         wall3 = new CCWall(-500, 100, 300 ,  3.14);
         wall4 = new CCWall(-700, -200, 200 ,  3.14/2+0.223);
+        wall5 = new CCWall(-450, -200, 200 ,  3.14-0.223);
+        wall6 = new CCWall(-500, -100, 200 ,  3.14/2-0.223);
+        spread = 3.14;
+        direction = 0;
+        density = 1;
     }
    
      /**
@@ -65,6 +75,19 @@ public class ParticleEmitter {
      public void setBoundingBox(Rectangle rect){
          boundingBox = rect; 
      }
+     
+     public void setDirection(double dir){
+         direction = dir;
+     }
+     
+     public void setSpread(double spr){
+         spread = spr;
+     }
+     
+     public void setDensity(int den){
+         density = den;
+     }
+     
     
      
     /**
@@ -73,8 +96,8 @@ public class ParticleEmitter {
      */
     public double directionRandomizer() {
         Random rand = new Random();
-        double min = 0;
-        double max = 3.14*2;  //180 degreees!!
+        double min = direction;
+        double max = spread;  //180 degreees!!
         double randomNum = min + (max - min) * rand.nextDouble();
         
         return randomNum;
@@ -151,7 +174,9 @@ public class ParticleEmitter {
         wall2.drawWall(g);
         wall3.drawWall(g);
         wall4.drawWall(g);
-        for (int i = 0; i <6; i++) {
+        wall5.drawWall(g);
+        wall6.drawWall(g);
+        for (int i = 0; i < density; i++) {
             
         
         Particle myparticle = new Particle(originX, originY, originX ,originY, directionRandomizer(), /// In radians
@@ -172,6 +197,8 @@ public class ParticleEmitter {
             Shape wallline2 = wall2.getWallShape();
             Shape wallline3 = wall3.getWallShape();
             Shape wallline4 = wall4.getWallShape();
+            Shape wallline5 = wall5.getWallShape();
+            Shape wallline6 = wall6.getWallShape();
             Shape particleRect2 = part.getParticleRect();
             Rectangle2D particleRect = particleRect2.getBounds2D();
             
@@ -295,6 +322,73 @@ public class ParticleEmitter {
                 part.setOriginX(newOriginX);
                 part.setOriginY(newOriginY);
                 CCVector reflected = wall4.calculateReflected(part.getPositionReset(), newOriginX, newOriginY);
+                part.setPosition(reflected);
+                
+                g.setPaint(Color.BLACK);
+                part.setNewPosition();
+                Shape particleNew = new Rectangle((int) part.getEmitterOriginX()  ,
+                    (int)part.getEmitterOriginY() , 5,5);
+                
+                part.setParticleRect(particleNew);
+                //part.setParticleReset(reflected);
+                g.draw(particleNew);
+                continue;
+//                CCVector reset = part.getPositionReset();
+//            reset.setAzi(part.getPosition().getAzimuth());
+//            part.setParticleReset(reset);
+                
+                
+                
+            }
+            
+            
+                        if (wallline5.intersects(particleRect)){ 
+//                double x =part.getPositionReset().getX();
+//                double y = part.getPositionReset().getY();
+//                double len = part.getPositionReset().getLength();
+//                double dir = part.getPosition().getAzimuth();
+//                CCVector reset = new CCVector(new CartesianCoordinate(x, y), 
+//                        new PolarCoordinate(dir, len));
+//                
+                
+                double newOriginX =  part.positionGetX() + part.getEmitterOriginX() ;
+                double newOriginY =  part.positionGetY() + part.getEmitterOriginY() ;
+                part.setOriginX(newOriginX);
+                part.setOriginY(newOriginY);
+                CCVector reflected = wall5.calculateReflected(part.getPositionReset(), newOriginX, newOriginY);
+                part.setPosition(reflected);
+                
+                g.setPaint(Color.BLACK);
+                part.setNewPosition();
+                Shape particleNew = new Rectangle((int) part.getEmitterOriginX()  ,
+                    (int)part.getEmitterOriginY() , 5,5);
+                
+                part.setParticleRect(particleNew);
+                //part.setParticleReset(reflected);
+                g.draw(particleNew);
+                continue;
+//                CCVector reset = part.getPositionReset();
+//            reset.setAzi(part.getPosition().getAzimuth());
+//            part.setParticleReset(reset);
+                
+                
+                
+            }
+                        
+                         if (wallline6.intersects(particleRect)){ 
+//                double x =part.getPositionReset().getX();
+//                double y = part.getPositionReset().getY();
+//                double len = part.getPositionReset().getLength();
+//                double dir = part.getPosition().getAzimuth();
+//                CCVector reset = new CCVector(new CartesianCoordinate(x, y), 
+//                        new PolarCoordinate(dir, len));
+//                
+                
+                double newOriginX =  part.positionGetX() + part.getEmitterOriginX() ;
+                double newOriginY =  part.positionGetY() + part.getEmitterOriginY() ;
+                part.setOriginX(newOriginX);
+                part.setOriginY(newOriginY);
+                CCVector reflected = wall6.calculateReflected(part.getPositionReset(), newOriginX, newOriginY);
                 part.setPosition(reflected);
                 
                 g.setPaint(Color.BLACK);

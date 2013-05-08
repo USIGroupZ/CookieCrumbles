@@ -57,6 +57,10 @@ public class Viewport extends JComponent implements ActionListener {
         return emitterList;
     }
     
+    public ArrayList getEmitterListBH(){
+        return emitterListBH;
+    }
+    
     public void clearEverything(){
         if (!emitterList.isEmpty()){
             
